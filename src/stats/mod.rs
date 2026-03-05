@@ -2,3 +2,4 @@ pub mod skyblock; // this is just the basic profile information not the full sky
 pub mod arcade;
 pub mod skywars;
 pub mod tntgames;
+pub mod uhc;
