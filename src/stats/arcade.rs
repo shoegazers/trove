@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug, Default, Clone)]
-struct Arcade {
+pub struct Arcade {
     coins: Option<usize>,
     dive_best_score_party: Option<usize>,
     dive_total_score_party: Option<usize>,

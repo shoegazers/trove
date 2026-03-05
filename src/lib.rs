@@ -13,6 +13,10 @@ pub const API_URL: &str = "https://api.hypixel.net/v2";
 pub struct Stats {
     #[serde(rename = "SkyBlock")] // why??
     pub skyblock: Option<stats::skyblock::SkyblockBase>,
+    #[serde(rename = "Arcade")]
+    pub arcade: Option<stats::arcade::Arcade>,  
+    #[serde(rename = "SkyWars")]
+    pub skywars: Option<stats::skywars::SkyWars>,
 }   
 
 #[derive(Deserialize, Debug, Default, Clone)]
@@ -56,6 +60,7 @@ pub async fn make_request(r: HypixelRequest, client: Client) -> Result<Request, 
             .send()
             .await?;
 
+        println!("Response: {:#?}", &response);
         let request: Request = serde_json::from_str(&response.text().await?).unwrap();
 
         Ok(request)
@@ -100,5 +105,15 @@ mod tests {
         };
         let p = get_stats(r).await;
         println!("{:#?}", &p.unwrap_or_default().stats.unwrap_or_default().skyblock);
+    }
+
+    #[tokio::test]
+    async fn get_skywars_test() {
+        let r = HypixelRequest {
+            uuid: "c17dec3e-6675-49e1-9d9a-70fb4be73a06".to_string(),
+            api_key: dotenv::var("API_KEY").unwrap()
+        };
+        let p = get_stats(r).await;
+        println!("{:#?}", &p.unwrap_or_default().stats.unwrap_or_default().skywars);
     }
 }
